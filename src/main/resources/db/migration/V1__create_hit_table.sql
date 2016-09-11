@@ -1,0 +1,21 @@
+CREATE TABLE hit
+(
+    id BIGINT PRIMARY KEY NOT NULL,
+    cause VARCHAR(255) NOT NULL,
+    direct BOOLEAN NOT NULL,
+    impactx DOUBLE PRECISION,
+    impacty DOUBLE PRECISION,
+    impactz DOUBLE PRECISION,
+    limbs BYTEA NOT NULL,
+    radius REAL NOT NULL,
+    shooter VARCHAR(255) NOT NULL,
+    surfacex DOUBLE PRECISION,
+    surfacey DOUBLE PRECISION,
+    surfacez DOUBLE PRECISION,
+    tag VARCHAR(255) NOT NULL,
+    target VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    velocityx DOUBLE PRECISION,
+    velocityy DOUBLE PRECISION,
+    velocityz DOUBLE PRECISION
+);
