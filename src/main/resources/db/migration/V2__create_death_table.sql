@@ -1,8 +1,0 @@
-CREATE TABLE death
-(
-  id BIGINT PRIMARY KEY NOT NULL,
-  killer VARCHAR(255),
-  name VARCHAR(255),
-  side VARCHAR(255),
-  tag VARCHAR(255)
-);

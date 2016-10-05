@@ -1,7 +1,4 @@
-package com.zeroecks.core.models;
-
-import io.katharsis.resource.annotations.JsonApiId;
-import io.katharsis.resource.annotations.JsonApiResource;
+package com.zeroecks.core.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +7,8 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity
-@JsonApiResource(type = "deaths")
 public class Death implements Serializable {
     @Id
-    @JsonApiId
     @GeneratedValue
     private Long id;
 
@@ -28,6 +23,14 @@ public class Death implements Serializable {
 
     @Column(nullable = false)
     private String side;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getKiller() {
         return killer;

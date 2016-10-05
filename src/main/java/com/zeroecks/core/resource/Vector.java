@@ -1,18 +1,10 @@
-package com.zeroecks.core.models;
+package com.zeroecks.core.resource;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-@Embeddable
-public class Vector implements Serializable {
-    @Column(nullable = false)
+public class Vector {
     private double x;
-
-    @Column(nullable = false)
     private double y;
-
-    @Column(nullable = false)
     private double z;
 
     public Vector(double x, double y, double z){

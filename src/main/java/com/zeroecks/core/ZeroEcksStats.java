@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,15 +25,6 @@ public class ZeroEcksStats {
     @Autowired
     private ResourceRegistry resourceRegistry;
 
-    @RequestMapping("/api/resources")
-    public Map<?, ?> getResources() {
-        final Map<String, String> result = new HashMap<>();
-        for (Class<?> clazz : resourceRegistry.getResources().keySet()) {
-            result.put(resourceRegistry.getResourceType(clazz), resourceRegistry.getResourceUrl(clazz));
-        }
-        return result;
-    }
-
     @Bean
     public FlywayMigrationStrategy flywayMigrationStrategy() {
         return new FlywayMigrationStrategy() {
@@ -41,6 +33,15 @@ public class ZeroEcksStats {
                 flyway.baseline();
             }
         };
+    }
+
+    @RequestMapping("/api/resources")
+    public Map<?, ?> getResources() {
+        final Map<String, String> result = new HashMap<>();
+        for (Class<?> clazz : resourceRegistry.getResources().keySet()) {
+            result.put(resourceRegistry.getResourceType(clazz), resourceRegistry.getResourceUrl(clazz));
+        }
+        return result;
     }
 
     public static void main(String[] args) {
