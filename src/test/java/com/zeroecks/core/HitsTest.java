@@ -4,11 +4,17 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.response.Response;
 import com.jayway.restassured.response.ValidatableResponse;
 import org.junit.Test;
 
 import java.util.Map;
 
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.path.json.JsonPath.from;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.http.HttpStatus.CREATED;
 
 public class HitsTest extends BaseTest {
@@ -24,7 +30,7 @@ public class HitsTest extends BaseTest {
         final Map<String, Object> targetData = ImmutableMap.of("data",
                 ImmutableMap.of("type", "players", "attributes", targetAttributes));
 
-        ValidatableResponse targetResponse = RestAssured.given()
+        final ValidatableResponse targetResponse = given()
                 .contentType("application/json")
                 .body(targetData)
                 .when()
@@ -41,7 +47,7 @@ public class HitsTest extends BaseTest {
         final Map<String, Object> shooterData = ImmutableMap.of("data",
                 ImmutableMap.of("type", "players", "attributes", shooterAttributes));
 
-        ValidatableResponse shooterResponse = RestAssured.given()
+        final ValidatableResponse shooterResponse = given()
                 .contentType("application/json")
                 .body(shooterData)
                 .when()
@@ -80,13 +86,14 @@ public class HitsTest extends BaseTest {
         final Map<String, Object> data = ImmutableMap.of("data",
                 ImmutableMap.of("type", "hits", "attributes", attributes, "relationships", relationships));
 
-        final ValidatableResponse response = RestAssured.given()
-                .contentType("application/json")
-                .body(data)
-                .when()
-                .post("/api/hits")
-                .then()
-                .log().everything()
-                .statusCode(CREATED.value());
+        given()
+            .contentType("application/json")
+            .body(data)
+        .when()
+            .post("/api/hits")
+        .then().assertThat()
+            .body("data.type", equalTo("hits"))
+            .body("data.attributes.targetTag", equalTo("Target Tag"))
+            .body("data.attributes.targetStance", equalTo("STAND"));
     }
 }
